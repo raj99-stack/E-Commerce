@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { WishlistService } from '../../../services/wishlist';
 import { CartItem } from '../../../models/user';
 import { CommonModule } from '@angular/common';
 
@@ -10,15 +11,17 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./wishlist.css']
 })
 export class Wishlist {
-  @Input() wishlistItems: CartItem[] = [];
-  @Output() removeFromWishlist = new EventEmitter<number>();
-  @Output() moveToCart = new EventEmitter<number>();
+  constructor(public wishlistService: WishlistService) {}
+
+  get wishlistItems(): CartItem[] {
+    return this.wishlistService.getWishlist();
+  }
 
   onRemove(id: number) {
-    this.removeFromWishlist.emit(id);
+    this.wishlistService.removeFromWishlist(id);
   }
 
   onMoveToCart(id: number) {
-    this.moveToCart.emit(id);
+    this.wishlistService.moveToCart(id);
   }
 }

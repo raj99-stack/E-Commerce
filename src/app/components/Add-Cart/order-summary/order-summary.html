@@ -31,12 +31,14 @@
   <p><strong>Discount:</strong> -₹{{ discount }}</p>
   <p>
     <strong>Delivery Charges:</strong> ₹{{
-      getOriginalTotal() > 2000 ? 0 : deliveryCharge
+      getOriginalTotal() > 2000 ? 0 : 50
     }}
     [delivery charge free over 2000]
   </p>
   <p class="grand-total"><strong>Grand Total:</strong> ₹{{ getGrandTotal() }}</p>
   <p class="savings"><strong>Your Total Savings:</strong> ₹{{ getTotalSavings() }}</p>
 
-  <button class="proceed-btn" *ngIf="getGrandTotal()>0" (click)="proceedOrder()">Proceed with Order</button>
+  <button class="proceed-btn" *ngIf="getGrandTotal() > 0" (click)="proceedOrder()">
+    Proceed with Order
+  </button>
 </div>

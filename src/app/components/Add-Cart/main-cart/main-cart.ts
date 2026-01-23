@@ -1,86 +1,77 @@
 import { Component, Input } from '@angular/core';
-import { User } from '../../../models/user';
+import { CartService } from '../../../services/cart';
+import { WishlistService } from '../../../services/wishlist';
+import { CartItem } from '../../../models/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { EmptyCart } from '../empty-cart/empty-cart';
 import { Cart } from '../cart/cart';
 import { OrderSummary } from '../order-summary/order-summary';
-import { EmptyCart } from '../empty-cart/empty-cart';
 import { Wishlist } from '../wishlist/wishlist';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-main-cart',
-  imports: [CommonModule, FormsModule, Cart, OrderSummary, EmptyCart, Wishlist],
+  imports: [CommonModule, FormsModule, EmptyCart, Cart, OrderSummary, Wishlist],
   templateUrl: './main-cart.html',
   styleUrls: ['./main-cart.css'],
 })
 export class MainCart {
-  title = 'E-Commerce(Shopping Cart)';
+  constructor(
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+  ) {}
   @Input() loggedInUser: User | null = null;
 
-  // ✅ Cart handlers now work directly on loggedInUser
-  handleRemove(itemId: number) {
-    if (!this.loggedInUser) return;
-    const item = this.loggedInUser.cart.find((i) => i.id === itemId);
-    if (item) {
-      if (item.quantity > 1) {
-        item.quantity--;
-      } else {
-        this.loggedInUser.cart = this.loggedInUser.cart.filter((i) => i.id !== itemId);
-      }
+  ngOnChanges() {
+    if (this.loggedInUser) {
+      // Load user’s cart and wishlist into services
+      this.loggedInUser.cart.forEach((item) => this.cartService.addItem(item));
+      this.loggedInUser.wishlist.forEach((item) => this.wishlistService.addToWishlist(item));
     }
+  }
+
+  // ✅ Expose cart items from CartService
+  get cartItems(): CartItem[] {
+    return this.cartService.getCart();
+  }
+
+  // ✅ Expose wishlist items from WishlistService
+  get wishlistItems(): CartItem[] {
+    return this.wishlistService.getWishlist();
+  }
+
+  // Cart handlers
+  handleRemove(itemId: number) {
+    this.cartService.removeItem(itemId);
   }
 
   handleAdd(itemId: number) {
-    if (!this.loggedInUser) return;
-    const item = this.loggedInUser.cart.find((i) => i.id === itemId);
-    if (item) item.quantity++;
+    this.cartService.addItemById(itemId); // helper in CartService
   }
 
   handleDelete(itemId: number) {
-    if (!this.loggedInUser) return;
-    this.loggedInUser.cart = this.loggedInUser.cart.filter((i) => i.id !== itemId);
+    this.cartService.deleteItem(itemId);
   }
 
   isCartEmpty(): boolean {
-    return (
-      !this.loggedInUser ||
-      this.loggedInUser.cart.length === 0 ||
-      this.loggedInUser.cart.every((i) => i.quantity === 0)
-    );
+    return this.cartService.isEmpty();
   }
 
   hasCartItems(): boolean {
-    return !!this.loggedInUser && this.loggedInUser.cart.some((i) => i.quantity > 0);
+    return this.cartService.hasItems();
   }
 
+  // Wishlist handlers
   handleRemoveFromWishlist(itemId: number) {
-    if (!this.loggedInUser) return;
-    this.loggedInUser.wishlist = this.loggedInUser.wishlist.filter((i) => i.id !== itemId);
+    this.wishlistService.removeFromWishlist(itemId);
   }
 
   handleMoveToCart(itemId: number) {
-    if (!this.loggedInUser) return;
-    const item = this.loggedInUser.wishlist.find((i) => i.id === itemId);
-    if (item) {
-      const cartItem = this.loggedInUser.cart.find((c) => c.id === itemId);
-      if (cartItem) {
-        cartItem.quantity++;
-      } else {
-        this.loggedInUser.cart.push({ ...item, quantity: 1 });
-      }
-      this.loggedInUser.wishlist = this.loggedInUser.wishlist.filter((i) => i.id !== itemId);
-    }
+    this.wishlistService.moveToCart(itemId);
   }
 
   handleAddToWishlist(itemId: number) {
-    if (!this.loggedInUser) return;
-    const item = this.loggedInUser.cart.find((i) => i.id === itemId);
-    if (item) {
-      const wishlistItem = this.loggedInUser.wishlist.find((w) => w.id === itemId);
-      if (!wishlistItem) {
-        this.loggedInUser.wishlist.push({ ...item });
-      }
-      this.loggedInUser.cart = this.loggedInUser.cart.filter((i) => i.id !== itemId);
-    }
+    this.wishlistService.addToWishlistById(itemId); // helper in WishlistService
   }
 }

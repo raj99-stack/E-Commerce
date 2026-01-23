@@ -1,4 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { CartService } from '../../../services/cart';
+import { WishlistService } from '../../../services/wishlist';
 import { CartItem } from '../../../models/user';
 import { CommonModule } from '@angular/common';
 
@@ -10,26 +12,29 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./cart.css'],
 })
 export class Cart {
-  @Input() cartItems: CartItem[] = [];
-  @Output() removeItem = new EventEmitter<number>();
-  @Output() addItem = new EventEmitter<number>();
-  @Output() deleteItem = new EventEmitter<number>();
-  @Output() addToWishlist = new EventEmitter<number>(); 
+  constructor(
+    public cartService: CartService,
+    public wishlistService: WishlistService
+  ) {}
+
+  get cartItems(): CartItem[] {
+    return this.cartService.getCart();
+  }
 
   onAdd(id: number) {
-    this.addItem.emit(id);
+    this.cartService.addItemById(id);
   }
 
   onRemove(id: number) {
-    this.removeItem.emit(id);
+    this.cartService.removeItem(id);
   }
 
   onDelete(id: number) {
-    this.deleteItem.emit(id);
+    this.cartService.deleteItem(id);
   }
 
   onAddToWishlist(id: number) {
-    this.addToWishlist.emit(id); 
+    this.wishlistService.addToWishlistById(id);
   }
 
   getIndividualTotal(item: CartItem): number {
@@ -37,9 +42,6 @@ export class Cart {
   }
 
   getTotal(): number {
-    return this.cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
+    return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
 }
