@@ -5,18 +5,17 @@ export interface CartItem {
   quantity: number;
 }
 
-export interface User { 
-  id: number; 
-  name: string; 
-  email: string; 
-  password: string; 
-  shippingAddress?: string; 
-  paymentDetails?: string; 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  shippingAddress?: string;
+  paymentDetails?: string;
   cart: CartItem[];        // ✅ required
   wishlist: CartItem[];    // ✅ required
-  role: 'user' | 'admin'; 
+  role: 'user' | 'admin';
 }
-
 
 
 export const MOCK_USERS: User[] = [

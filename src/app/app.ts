@@ -39,14 +39,14 @@ export class App {
 
   handleLogout() {
     this.loggedInUser = null;
-    this.currentSection = 'login'; // back to login page
+    this.currentSection = 'login'; 
   }
 
   
 onProfileUpdate(updatedUser: User) {
   this.loggedInUser = updatedUser;
   alert('Profile updated successfully!');
-  this.currentSection = 'dashboard'; // ✅ go back after update
+  this.currentSection = 'dashboard'; 
 }
 
 }
