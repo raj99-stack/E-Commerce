@@ -61,7 +61,7 @@ export const MOCK_USERS: User[] = [
     id: 3,
     name: 'Alice',
     email: 'alice@example.com',
-    password: 'alicepw',
+    password: 'Alic1234@',
     shippingAddress: '789 Road, City',
     paymentDetails: 'UPI alice@upi',
     cart: [

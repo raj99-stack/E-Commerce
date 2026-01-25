@@ -54,5 +54,6 @@ export class OrderSummary {
   proceedOrder() {
     alert(`Order placed! Final amount: ₹${this.getGrandTotal()}`);
     this.cartItems=[];
+    
   }
 }

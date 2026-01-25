@@ -1,7 +1,7 @@
-<h1>HI</h1>
+
 <app-navbar *ngIf="loggedInUser?.role !== 'admin'" [currentUser]="loggedInUser" (navigateDashboard)="showSection('dashboard')"
   (navigateLogin)="showSection('login')" (navigateRegister)="showSection('register')"
-  (navigateCart)="showSection('cart')" (logout)="handleLogout()"> 
+  (navigateCart)="showSection('cart')" (logout)="handleLogout()" (navigateOrders)="showSection('orders')"> 
 </app-navbar>
 
 
@@ -15,11 +15,13 @@
   (cartUpdated)="loggedInUser = $event; currentSection = 'cart'">
 </app-hero-page>
 
-
-
-
 <app-main-cart *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'" [loggedInUser]="loggedInUser">
 </app-main-cart>
+<!-- order btn added -->
+<app-order-main 
+  *ngIf="currentSection === 'orders' && loggedInUser?.role === 'user'" 
+  [currentUserId]="loggedInUser?.id"> 
+</app-order-main>
 
 <app-admin-main *ngIf="currentSection === 'admin' && loggedInUser?.role === 'admin'" 
 [productList]="products" 
