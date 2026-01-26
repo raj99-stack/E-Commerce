@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { OrderService } from '../../../services/order';
+import { OrderMgmt } from '../../../services/order-mgmt';
 import { Order, OrderStatus } from '../../../models/order'; // ✅ Import Enum
 
 @Component({
@@ -20,7 +20,7 @@ export class OrderDetail implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private orderService: OrderService
+    private orderMgmt: OrderMgmt
   ) {}
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class OrderDetail implements OnInit {
     
     if (id) {
       // 2. Fetch the order (The service automatically checks if it needs to be Fulfilled)
-      this.order = this.orderService.getOrderById(id);
+      this.order = this.orderMgmt.getOrderById(id);
     }
   }
 
@@ -38,10 +38,10 @@ export class OrderDetail implements OnInit {
       const confirmCancel = confirm('Are you sure you want to cancel this order?');
       if (confirmCancel) {
         // 1. Perform the action
-        this.orderService.cancelOrder(this.order.id);
+        this.orderMgmt.cancelOrder(this.order.id);
         
         // ✅ 2. FIX: Re-fetch the order immediately to get the new status!
-        this.order = this.orderService.getOrderById(this.order.id);
+        this.order = this.orderMgmt.getOrderById(this.order.id);
       }
     }
   }
@@ -51,10 +51,10 @@ export class OrderDetail implements OnInit {
       const confirmReturn = confirm('Do you want to request a return for this item?');
       if (confirmReturn) {
         // 1. Perform the action
-        this.orderService.returnOrder(this.order.id);
+        this.orderMgmt.returnOrder(this.order.id);
         
         // ✅ 2. FIX: Re-fetch to update the UI
-        this.order = this.orderService.getOrderById(this.order.id);
+        this.order = this.orderMgmt.getOrderById(this.order.id);
       }
     }
   }

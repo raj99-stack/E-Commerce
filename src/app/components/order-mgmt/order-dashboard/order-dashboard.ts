@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // We import the Service to inject it
-import { OrderService } from '../../../services/order';
+import { OrderMgmt } from '../../../services/order-mgmt';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -19,14 +19,14 @@ export class OrderDashboard implements OnInit {
     pendingCount: 0
   };
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderMgmt: OrderMgmt) {}
 
   ngOnInit() {
     // ✅ FIX: Pass the 'activeUserId' so the service filters the data!
-    const currentId = this.orderService.activeUserId;
+    const currentId = this.orderMgmt.activeUserId;
     
     if (currentId) {
-      this.stats = this.orderService.getStats(currentId);
+      this.stats = this.orderMgmt.getStats(currentId);
     }
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // ✅ 1. IMPORT THIS
-import { OrderService } from '../../../services/order';
+import { OrderMgmt } from '../../../services/order-mgmt';
 import { Order, OrderStatus } from '../../../models/order';
 import { OrderFilterPipe } from '../../../pipes/order-filter.pipe';
 
@@ -19,7 +19,7 @@ export class OrderList implements OnInit {
   searchForm: FormGroup;
   eOrderStatus = OrderStatus;  // Expose Enum to HTML
 
-  constructor(private orderService: OrderService, private fb: FormBuilder) {
+  constructor(private orderMgmt: OrderMgmt, private fb: FormBuilder) {
     this.searchForm = this.fb.group({
       searchText: [''],
       status: ['All']
@@ -28,6 +28,6 @@ export class OrderList implements OnInit {
 
   ngOnInit() {
     // Get orders using the stored ID
-    this.orders = this.orderService.getOrdersForUser(this.orderService.activeUserId);
+    this.orders = this.orderMgmt.getOrdersForUser(this.orderMgmt.activeUserId);
   }
 }
