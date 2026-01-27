@@ -11,7 +11,7 @@ import { CartItem } from './models/user';
 import { AdminMain } from './components/admin-dashboard/admin-main/admin-main';
 import { FooterComponent } from './components/shared/footer-component/footer-component';
 import { ProfileDashboard } from './components/LoginRegister/profile-dashboard/profile-dashboard';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
