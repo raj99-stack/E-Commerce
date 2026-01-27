@@ -12,7 +12,7 @@
   *ngIf="currentSection === 'dashboard'"
   [loggedInUser]="loggedInUser"
   [products]="products"
-  (cartUpdated)="loggedInUser = $event; currentSection = 'cart'">
+  (cartUpdated)="loggedInUser = $event; currentSection = 'dashboard'">
 </app-hero-page>
 
 <app-main-cart *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'" [loggedInUser]="loggedInUser">

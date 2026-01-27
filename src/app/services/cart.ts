@@ -8,7 +8,7 @@ export class CartService {
   private cart: CartItem[] = [];
 
   getCart(): CartItem[] {
-    return [...this.cart];
+    return this.cart; // return reference
   }
 
   addItem(item: CartItem) {
@@ -20,17 +20,14 @@ export class CartService {
     }
   }
 
-  // ✅ Helper: add item by ID
   addItemById(itemId: number) {
-  const item = this.cart.find(i => i.id === itemId);
-  if (item) {
-    item.quantity++;
-  } else {
-    // If item doesn’t exist, create a placeholder or fetch from product list
-    this.cart.push({ id: itemId, name: 'Unknown', price: 0, quantity: 1 });
+    const item = this.cart.find(i => i.id === itemId);
+    if (item) {
+      item.quantity++;
+    } else {
+      this.cart.push({ id: itemId, name: 'Unknown', price: 0, quantity: 1 });
+    }
   }
-}
-
 
   removeItem(itemId: number) {
     const item = this.cart.find(i => i.id === itemId);

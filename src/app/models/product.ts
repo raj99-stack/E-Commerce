@@ -14,7 +14,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description: 'Premium noise-cancelling over-ear headphones with 40-hour battery life.',
     price: 2000,
     imageUrl: './assets/image.png', 
-    category: 'Electronics',
+    category: 'Accessories',
   },
 
   {

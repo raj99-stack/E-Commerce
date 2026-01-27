@@ -17,6 +17,7 @@ export class HeroPage {
   @Input() loggedInUser: User | null = null;
 
   @Output() cartUpdated = new EventEmitter<User>();
+  @Output() wishlistUpdated=new EventEmitter<User>();
 
   searchTerm: string = '';
   sortCategory: string = '';
@@ -42,9 +43,39 @@ export class HeroPage {
     } else {
       this.loggedInUser.cart.push({ ...product, quantity: 1 });
     }
-
+    alert("Added to Cart")
     // ✅ Emit updated user back to App
     this.cartUpdated.emit(this.loggedInUser);
+  }
+
+
+
+
+
+  onAddToWishList(product: Product) {
+    if (!this.loggedInUser) {
+      alert('Please login first to add items to cart!');
+      return;
+    }
+
+    if (this.loggedInUser.role === 'admin') {
+      alert('Admins cannot add products to cart.');
+      return;
+    }
+
+    if (!this.loggedInUser.wishlist) {
+      this.loggedInUser.wishlist = [];
+    }
+
+    const existing = this.loggedInUser.wishlist.find((i) => i.id === product.id);
+    if (existing) {
+      existing.quantity++;
+    } else {
+      this.loggedInUser.wishlist.push({ ...product, quantity: 1 });
+    }
+    alert('Added to wishlist')
+    // ✅ Emit updated user back to App
+    this.wishlistUpdated.emit(this.loggedInUser);
   }
 
   get filteredProducts(): Product[] {

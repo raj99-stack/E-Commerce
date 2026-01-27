@@ -18,8 +18,10 @@
   <select [(ngModel)]="sortCategory">
     <option value="">All Categories</option>
     <option value="Electronics">Electronics</option>
-    <option value="Clothing">Clothing</option>
-    <option value="Books">Books</option>
+    <option value="Computers">Computers</option>
+    <option value="Wearables">Wearables</option>
+    <option value="Accessories">Accessories</option>
+
     <!-- add more categories as needed -->
   </select>
 </div>
@@ -29,6 +31,7 @@
     *ngFor="let p of filteredProducts"
     [product]="p"
     [loggedInUser]="loggedInUser"
-    (addToCart)="onAddToCart($event)">
+    (addToCart)="onAddToCart($event)"
+    (addtoWishlist)="onAddToWishList($event)">
   </app-product-card>
 </div>

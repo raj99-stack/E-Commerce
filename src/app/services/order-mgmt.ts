@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Order, OrderStatus } from '../models/order';
 import { MOCK_PRODUCTS } from '../models/product'; 
 import { CartItem } from '../models/user';
-
+import { MOCK_USERS } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -102,7 +102,7 @@ export class OrderMgmt {
     console.log('Order Placed & Saved:', newOrder);
     alert(`Order placed! Final amount: ₹${finalAmount}`);
     cartItems.length = 0; // Clear cart
-    
+    const iddd=MOCK_USERS.find(x=>x.id===this.activeUserId);
   }
 
   // ==============================================================

@@ -1,125 +1,94 @@
-
 /* ============================================================
-   MAIN CART PAGE — Neon Dark Theme
-   No HTML changes required
+   MAIN CART PAGE — Compact & Unified
    ============================================================ */
 
 :host {
   display: block;
   width: 100%;
   max-width: 100%;
+  padding-bottom: 40px; /* Space at the very bottom of the page */
 }
 
-/* -----------------------------
-   PAGE TITLE
-   ----------------------------- */
-
+/* 1. Page Title - Reduced Margins */
 h1 {
   text-align: center;
-  font-size: 32px;
-  font-weight: 900;
-  margin: 20px 0 30px;
+  font-size: 24px; /* Slightly smaller for better fit */
+  font-weight: 800;
+  margin: 15px 0 10px; /* Reduced from 20/30 */
   color: var(--text);
-  letter-spacing: 1px;
-
-  text-shadow: 0 0 22px color-mix(in oklab, var(--accent) 35%, transparent);
-
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* -----------------------------
-   USER INFO SECTION
-   ----------------------------- */
-
-div > h2 {
-  text-align: center;
-  font-size: 18px;
-  color: var(--muted);
-  font-weight: 600;
-  margin-bottom: 20px;
-  line-height: 1.4;
-
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* -----------------------------
-   CART + ORDER SUMMARY LAYOUT
-   ----------------------------- */
-
-app-cart,
-app-order-summary {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* The cart and summary should align side-by-side on large screens */
-div > app-cart + app-order-summary {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 24px;
-  width: min(1200px, 92vw);
-  margin-inline: auto;
-
-  animation: slideUp 0.5s ease-out;
-}
-
-/* -----------------------------
-   EMPTY CART (centered)
-   ----------------------------- */
-app-empty-cart {
-  display: block;
-  margin: 20px auto;
-  width: min(500px, 90%);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 15px color-mix(in oklab, var(--accent) 25%, transparent);
   animation: fadeIn 0.4s ease-out;
 }
 
-/* -----------------------------
-   WISHLIST SECTION
-   ----------------------------- */
-
-app-wishlist {
-  display: block;
-  width: min(1200px, 92vw);
-  margin: 40px auto 20px;
-  padding: 20px;
-  border-radius: 16px;
-
-  background: var(--surface);
-  border: 1px solid #1b2033;
-  box-shadow: 0 0 20px rgba(0,0,0,0.35);
-
+/* 2. User Info - Tightened Spacing */
+div > h2 {
+  text-align: center;
+  font-size: 14px;
+  color: #666; /* Subtler gray */
+  margin-bottom: 20px;
+  line-height: 1.2;
   animation: fadeIn 0.5s ease-out;
 }
 
-/* -----------------------------
-   ANIMATIONS
-   ----------------------------- */
+/* 3. Main Layout Section */
+div > app-cart + app-order-summary {
+  display: grid;
+  grid-template-columns: 1.8fr 1.2fr; /* Balanced columns */
+  gap: 20px; /* Reduced gap */
+  width: min(1100px, 95vw); /* Wider container to utilize screen space */
+  margin: 0 auto;
+  align-items: start; /* Prevents summary from stretching */
+  animation: slideUp 0.4s ease-out;
+}
 
+/* Ensure individual components don't bring their own bulky margins */
+app-cart, 
+app-order-summary,
+app-wishlist {
+  display: block;
+  margin: 0 !important; 
+  padding: 0 !important;
+}
+
+/* 4. Empty Cart State */
+app-empty-cart {
+  display: block;
+  margin: 10px auto;
+  width: min(400px, 90%);
+}
+
+/* 5. Wishlist Wrapper - Integrated Look */
+app-wishlist {
+  display: block;
+  width: min(1100px, 95vw);
+  margin: 30px auto 0 !important; /* Reduced top margin */
+  padding-top: 20px !important;
+  border-top: 1px solid #222; /* Divider instead of a bulky box */
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* 6. Refined Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* -----------------------------
-   RESPONSIVE BEHAVIOR
-   ----------------------------- */
-
-/* Cart + summary stack vertically on smaller screens */
+/* 7. Responsive Fixes */
 @media (max-width: 920px) {
   div > app-cart + app-order-summary {
     grid-template-columns: 1fr;
+    gap: 15px;
   }
 }
 
-/* Adjust spacing for smaller screens */
 @media (max-width: 520px) {
-  h1 { font-size: 26px; }
-  div > h2 { font-size: 16px; }
-  app-wishlist { padding: 16px; }
+  h1 { font-size: 20px; margin: 10px 0; }
+  div > h2 { font-size: 13px; margin-bottom: 15px; }
+  :host { padding: 10px; }
 }

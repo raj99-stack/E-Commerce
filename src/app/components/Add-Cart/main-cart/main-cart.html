@@ -4,13 +4,10 @@
   </div>
 
   <div *ngIf="hasCartItems()">
-    <!-- Cart component now reads from CartService directly -->
     <app-cart></app-cart>
-
-    <!-- OrderSummary also reads from CartService + OrderService -->
+    <app-wishlist></app-wishlist>
     <app-order-summary></app-order-summary>
   </div>
 
-  <!-- Wishlist component reads from WishlistService directly -->
-  <app-wishlist></app-wishlist>
+  
 </div>
