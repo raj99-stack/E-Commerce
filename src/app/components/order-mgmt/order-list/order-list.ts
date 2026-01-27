@@ -9,7 +9,6 @@ import { OrderFilterPipe } from '../../../pipes/order-filter.pipe';
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  // ✅ 2. ADD 'RouterModule' TO THIS LIST
   imports: [CommonModule, ReactiveFormsModule, OrderFilterPipe, RouterModule], 
   templateUrl: './order-list.html',
   styleUrls: ['./order-list.css']
@@ -17,7 +16,7 @@ import { OrderFilterPipe } from '../../../pipes/order-filter.pipe';
 export class OrderList implements OnInit {
   orders: Order[] = [];
   searchForm: FormGroup;
-  eOrderStatus = OrderStatus;  // Expose Enum to HTML
+  eOrderStatus = OrderStatus;  // Enum to HTML
 
   constructor(private orderMgmt: OrderMgmt, private fb: FormBuilder) {
     this.searchForm = this.fb.group({

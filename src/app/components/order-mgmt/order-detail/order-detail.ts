@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // ✅ 1. Import FormsModule for the input box
+import { FormsModule } from '@angular/forms'; // Import FormsModule for the input box
 import { OrderMgmt } from '../../../services/order-mgmt';
 import { Order, OrderStatus } from '../../../models/order';
-
+import { MOCK_USERS } from '../../../models/user';
 @Component({
   selector: 'app-order-detail',
-  standalone: true,
-  // ✅ 2. Add FormsModule to imports so [(ngModel)] works
+
   imports: [CommonModule, RouterModule, FormsModule], 
-  templateUrl: './order-detail.html', // Make sure this matches your file name
+  templateUrl: './order-detail.html',
   styleUrls: ['./order-detail.css']
 })
 export class OrderDetail implements OnInit {
   order: Order | undefined;
-  eOrderStatus = OrderStatus; 
-
-  // ✅ 3. New State Variables for the Message Box
+  eOrderStatus = OrderStatus; //enum order status
+  userAdd="";
+  userPayment="";
+  //State Variables for the Message Box
   showCancelParams = false;
   showReturnParams = false;
-  actionReason = ''; // Stores the user's input
+  actionReason = ''; // user's input
 
   constructor(
     private route: ActivatedRoute,
@@ -29,9 +29,11 @@ export class OrderDetail implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id'); //comes from router.ts and from list.html link it is getting populated.
     if (id) {
       this.order = this.orderMgmt.getOrderById(id);
+      this.userAdd=MOCK_USERS.find(u=>u.id===this.order?.userId)?.shippingAddress || 'Default Address';
+      this.userPayment=MOCK_USERS.find(u=>u.id===this.order?.userId)?.paymentDetails || 'Default Payment Method';
     }
   }
 
@@ -53,7 +55,7 @@ export class OrderDetail implements OnInit {
     }
 
     if (this.order) {
-      // 2. Call Service (You can log the reason here for now)
+     
       console.log('Cancelling Order. Reason:', this.actionReason);
       
       this.orderMgmt.cancelOrder(this.order.id);

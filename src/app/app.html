@@ -17,6 +17,7 @@
 
 <app-main-cart *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'" [loggedInUser]="loggedInUser">
 </app-main-cart>
+
 <!-- order btn added -->
 <app-order-main 
   *ngIf="currentSection === 'orders' && loggedInUser?.role === 'user'" 

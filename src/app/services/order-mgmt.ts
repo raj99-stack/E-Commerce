@@ -110,13 +110,13 @@ export class OrderMgmt {
   // ==============================================================
 
   getOrdersForUser(userId?: number): Order[] {
-    const targetId = userId ?? this.activeUserId;
+    const targetId = userId || this.activeUserId;
     if (!targetId) return [];
 
     const userOrders = this.orders.filter(order => order.userId === targetId);
 
     return userOrders.map(order => {
-      this.checkAndAutoFulfill(order); 
+      // this.checkAndAutoFulfill(order); 
       const enrichedItems = order.items.map(item => {
         const productInfo = MOCK_PRODUCTS.find(p => p.id === item.productId);
         if (productInfo) {
@@ -127,7 +127,7 @@ export class OrderMgmt {
           };
         }
         return null; 
-      }).filter(item => item !== null) as any;
+      }).filter(item => item !== null);
 
       return { ...order, productDetails: enrichedItems };
     });
@@ -137,7 +137,7 @@ export class OrderMgmt {
     const order = this.orders.find(o => o.id === orderId);
     if (!order) return undefined;
 
-    this.checkAndAutoFulfill(order);
+    // this.checkAndAutoFulfill(order);
 
     const enrichedItems = order.items.map(item => {
         const productInfo = MOCK_PRODUCTS.find(p => p.id === item.productId);
@@ -164,14 +164,14 @@ export class OrderMgmt {
     }
   }
 
-  private checkAndAutoFulfill(order: Order) {
-    if (order.status === OrderStatus.Delivered) {
-      const orderDate = new Date(order.date);
-      const today = new Date();
-      const diffDays = Math.ceil(Math.abs(today.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
-      if (diffDays > 15) order.status = OrderStatus.Fulfilled;
-    }
-  }
+  // private checkAndAutoFulfill(order: Order) {
+  //   if (order.status === OrderStatus.Delivered) {
+  //     const orderDate = new Date(order.date);
+  //     const today = new Date();
+  //     const diffDays = Math.ceil(Math.abs(today.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
+  //     if (diffDays > 15) order.status = OrderStatus.Fulfilled;
+  //   }
+  // }
 
   getStats(userId?: number) {
     const myOrders = this.getOrdersForUser(userId);

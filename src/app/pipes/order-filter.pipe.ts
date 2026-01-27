@@ -20,7 +20,7 @@ export class OrderFilterPipe implements PipeTransform {
       const lowerTerm = searchText.toLowerCase();
       filtered = filtered.filter(o => 
         o.id.toLowerCase().includes(lowerTerm) || 
-        o.productDetails?.some(p => p.name.toLowerCase().includes(lowerTerm))
+        o.productDetails?.some(p => p.name.toLowerCase().includes(lowerTerm)) //to resolve the problem where the cart had some false product id
       );
     }
 

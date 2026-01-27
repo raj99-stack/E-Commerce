@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// We import the Service to inject it
 import { OrderMgmt } from '../../../services/order-mgmt';
 
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
   imports: [CommonModule],
-  // 1. Point to the external HTML file
   templateUrl: './order-dashboard.html',
-  // 2. Point to the external CSS file
   styleUrl: './order-dashboard.css'
 })
 export class OrderDashboard implements OnInit {
@@ -22,7 +19,7 @@ export class OrderDashboard implements OnInit {
   constructor(private orderMgmt: OrderMgmt) {}
 
   ngOnInit() {
-    // ✅ FIX: Pass the 'activeUserId' so the service filters the data!
+    // Pass the 'activeUserId' so the service filters the data!
     const currentId = this.orderMgmt.activeUserId;
     
     if (currentId) {

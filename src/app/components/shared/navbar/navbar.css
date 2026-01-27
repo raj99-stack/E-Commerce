@@ -99,14 +99,16 @@
    → Accent the first two buttons.
 */
 .nav-actions button:nth-child(1),
-.nav-actions button:nth-child(2) {
+.nav-actions button:nth-child(2),
+.nav-actions button:nth-child(3),
+.nav-actions button:nth-child(4) {
   background: color-mix(in oklab, var(--accent) 16%, var(--surface-2));
   border-color: var(--accent);
   box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
 }
 
 /* Keep the 3rd button neutral (Sign Out) */
-.nav-actions button:nth-child(3) {
+.nav-actions button:nth-child(4) {
   background: var(--surface-2);
   border-color: #1f2440;
   box-shadow: none;

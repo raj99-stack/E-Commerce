@@ -37,8 +37,7 @@ export const MOCK_USERS: User[] = [
     shippingAddress: '123 Street, City',
     paymentDetails: 'Visa **** 1234',
     cart: [],
-    wishlist: [
-      ],
+    wishlist: [],
     role: 'user'
   },
   {
