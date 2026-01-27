@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Navbar } from './components/shared/navbar/navbar';
@@ -10,12 +10,14 @@ import { MainCart } from './components/Add-Cart/main-cart/main-cart';
 import { AdminMain } from './components/admin-dashboard/admin-main/admin-main';
 import { FooterComponent } from './components/shared/footer-component/footer-component';
 import { ProfileDashboard } from './components/LoginRegister/profile-dashboard/profile-dashboard';
-import { UserService } from './services/user-service';  // ✅ import
+import { UserService } from './services/user-service';  
+import { Router } from '@angular/router';
+import { OrderMain } from './components/order-mgmt/order-main/order-main';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ProfileDashboard, CommonModule, FormsModule, Navbar, AuthPage, HeroPage, MainCart, AdminMain, FooterComponent],
+  imports: [OrderMain,ProfileDashboard, CommonModule, FormsModule, Navbar, AuthPage, HeroPage, MainCart, AdminMain, FooterComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
@@ -24,12 +26,18 @@ export class App {
   currentSection: string = 'dashboard';
   title = 'E-Commerce (Shopping Cart)';
   products: Product[] = [...MOCK_PRODUCTS];
-  
-  constructor(private userService: UserService) {}
 
+
+
+  constructor(
+  private userService: UserService,
+  private router: Router
+  ) {}
+ 
   showSection(section: string) {
     this.currentSection = section;
   }
+  
 
   handleLogin(user: User) {
     this.loggedInUser = user;

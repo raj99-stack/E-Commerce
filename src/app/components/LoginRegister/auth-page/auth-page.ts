@@ -47,7 +47,6 @@ export class AuthPage {
     this.showProfile = true;
   }
 
-  // ✅ Added: bubble up login success to App so it can switch to dashboard
   @Output() userLoggedIn = new EventEmitter<User>();
 
   onLoginSuccess(user: User) {
