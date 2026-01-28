@@ -13,7 +13,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Wireless Headphones',
     description: 'Premium noise-cancelling over-ear headphones with 40-hour battery life.',
     price: 2000,
-    imageUrl: './assets/image.png', 
+    imageUrl: './assets/White Headphones.jpg', 
     category: 'Accessories',
   },
 
@@ -23,7 +23,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description:
       'Latest flagship Android smartphone with 120Hz AMOLED display and pro-grade camera.',
     price: 45000,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/Smartphone.jpg',
     category: 'Mobiles',
   },
   {
@@ -31,7 +31,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Gaming Laptop',
     description: 'High-performance laptop featuring an RTX 4060 and 16GB RAM for seamless gaming.',
     price: 85000,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/Gaming Laptop.jpg',
     category: 'Computers',
   },
   {
@@ -39,7 +39,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Mechanical Keyboard',
     description: 'RGB backlit mechanical keyboard with tactile blue switches.',
     price: 3500,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/Keyboard.jpg',
     category: 'Accessories',
   },
   {
@@ -47,7 +47,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Smart Watch',
     description: 'Fitness tracker with heart rate monitoring, GPS, and water resistance.',
     price: 12000,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/Smart Watch.jpg',
     category: 'Wearables',
   },
   {
@@ -55,7 +55,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Bluetooth Speaker',
     description: 'Portable waterproof speaker with deep bass and 360-degree sound.',
     price: 2500,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/Bluetooth Speaker.jpg',
     category: 'Electronics',
   },
   {
@@ -63,7 +63,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: '4K Ultra HD Monitor',
     description: '27-inch IPS panel with color accuracy perfect for designers.',
     price: 28000,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/Monitor.jpg',
     category: 'Computers',
   },
   {
@@ -71,7 +71,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'USB-C Hub Adapter',
     description: '7-in-1 multi-port adapter with HDMI, USB 3.0, and SD card reader.',
     price: 1500,
-    imageUrl: './assets/image.png',
+    imageUrl: './assets/USB Hub.jpg',
     category: 'Accessories',
   },
 ];

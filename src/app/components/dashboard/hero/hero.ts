@@ -34,17 +34,25 @@ export class HeroPage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+ ngOnInit() {
     // 1. Fetch Products
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data;
-    });
+    this.products=this.productService.getProducts();
+   
+   
+    // 1. Fetch Products
+   
+ 
+    // 2. Get User from Service (Assuming your service has a method or property for this)
+    // If your UserService uses an Observable/Signal, subscribe to it here.
+    // For now, let's assume a method like getCurrentUser() or similar exists.
+    this.loggedInUser = this.userService.loggedInUser;
+  }
+
+ 
 
     // 2. Get User from Service (Assuming your service has a method or property for this)
     // If your UserService uses an Observable/Signal, subscribe to it here.
     // For now, let's assume a method like getCurrentUser() or similar exists.
-    this.loggedInUser = this.userService.loggedInUser; 
-  }
 
   onAddToCart(product: Product) {
     if (!this.loggedInUser) {

@@ -11,6 +11,11 @@ import { OrderDashboard } from './components/order-mgmt/order-dashboard/order-da
 import { OrderList } from './components/order-mgmt/order-list/order-list';
 import { OrderDetail } from './components/order-mgmt/order-detail/order-detail';
 import { RegisterForm } from './components/LoginRegister/register-form/register-form';
+import { ViewProduct } from './components/admin-dashboard/view-product/view-product';
+import { AddProduct } from './components/admin-dashboard/add-product/add-product';
+import { Editproduct } from './components/admin-dashboard/edit-product/edit-product';
+import { Editformcomponent } from './components/admin-dashboard/editformcomponent/editformcomponent';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,7 +24,6 @@ export const routes: Routes = [
   {path: 'register', component:RegisterForm},
   { path: 'cart', component: MainCart },
   { path: 'profile', component: ProfileDashboard },
-  { path: 'admin', component: AdminMain },
 
   // ✅ NESTED ROUTING FIX
   { 
@@ -31,6 +35,23 @@ export const routes: Routes = [
       { path: 'detail/:id', component: OrderDetail }
     ]
   },
+  // ✅ NESTED ADMIN ROUTES
+  {
+  path: 'admin',
+  component: AdminMain,
+  children: [
+    { path: '', redirectTo: 'products', pathMatch: 'full' },
+    { path: 'products', component: ViewProduct },
+    { path: 'add', component: AddProduct },
+ 
+    // Manage Products (edit + delete in one place)
+    { path: 'manage', component: Editproduct },
+ 
+    // Edit form for a specific product
+    { path: 'edit/:id', component: Editformcomponent } // <-- separate form component
+  ]
+},
+ 
 
   { path: '**', redirectTo: 'home' } 
 ];
