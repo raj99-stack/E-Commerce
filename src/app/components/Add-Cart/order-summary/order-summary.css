@@ -3,29 +3,26 @@
    ============================================================ */
 
 :host {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+  display: block;
   width: 100%;
   box-sizing: border-box;
+  /* Removed large padding to let the parent grid handle spacing */
 }
 
-/* 1. Header Styling - Fixed positioning */
+/* Header - Moved inside or aligned to container */
 h3 {
-  text-align: center;
-  font-size: 18px;
+  text-align: left; /* Changed to left for a more modern sidebar look */
+  font-size: 16px;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   color: white;
-  margin-bottom: 20px;
-  opacity: 0.8;
+  margin: 0 0 15px 5px;
+  opacity: 0.9;
 }
 
-/* 2. Centralized Container - Fixed Width Logic */
+/* Container */
 .summary-container {
   width: 100%;
-  max-width: 500px; /* Constrained for better focus */
   padding: 24px;
   background: #121212;
   border: 1px solid #2a2a2a;
@@ -33,49 +30,60 @@ h3 {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px; /* Increased gap for clarity */
   animation: dropIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
-/* 3. Table Styling - Tightened */
+/* Table - Optimized for Sidebar */
 .summary-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .summary-table th {
   font-size: 10px;
-  color: #666;
+  color: #555;
   text-transform: uppercase;
   text-align: left;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #222;
 }
 
 .summary-table td {
-  padding: 8px 0;
-  font-size: 13px;
-  color: #ddd;
+  padding: 10px 0;
+  font-size: 12px; /* Slightly smaller for sidebar fit */
+  color: #bbb;
+  border-bottom: 1px solid #1a1a1a;
 }
 
-/* 4. Compact Coupon Bar */
+/* Right-align numeric columns for better readability */
+.summary-table th:nth-child(2),
+.summary-table td:nth-child(2),
+.summary-table th:nth-child(4),
+.summary-table td:nth-child(4) {
+  text-align: right;
+}
+
+/* Coupon Section */
 .coupon-section {
   display: flex;
   background: #000;
-  border-radius: 10px;
-  padding: 3px;
+  border-radius: 12px;
+  padding: 4px;
   border: 1px solid #333;
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 .coupon-section input {
   background: transparent;
   border: none;
   color: white;
-  padding: 8px 12px;
+  padding: 10px 12px;
   flex: 1;
   font-size: 13px;
+  outline: none;
 }
 
 .coupon-section button {
@@ -83,10 +91,11 @@ h3 {
   color: var(--accent);
   border: none;
   border-radius: 8px;
-  padding: 0 15px;
+  padding: 0 18px;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -95,65 +104,78 @@ h3 {
   color: #000;
 }
 
-/* 5. Pricing Details */
+/* Pricing Details */
 .summary-container p {
   display: flex;
   justify-content: space-between;
-  margin: 2px 0;
+  align-items: center;
+  margin: 0;
   font-size: 13px;
   color: #aaa;
 }
 
-.summary-container .savings {
-  color: #a3ff33; /* Slightly more neon green */
+.note {
+  font-size: 10px;
+  color: #666;
+  display: block; /* Moves to new line if space is tight */
+  text-align: right;
+}
+
+.savings {
+  color: #a3ff33 !important;
   font-size: 12px;
-  background: rgba(163, 255, 51, 0.05);
-  padding: 4px 0;
+  background: rgba(163, 255, 51, 0.08);
+  padding: 10px;
+  border-radius: 8px;
+  justify-content: center !important; /* Center the savings text */
+  margin-top: 5px !important;
 }
 
 .grand-total {
   margin-top: 10px !important;
-  padding-top: 15px;
-  border-top: 1px solid #222;
+  padding-top: 20px;
+  border-top: 1px dashed #333; /* Dashed line for "receipt" feel */
   color: #fff !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
 }
 
-.grand-total strong {
+.grand-total strong:last-child {
   color: var(--accent);
-  font-size: 22px;
+  font-size: 24px;
 }
 
-/* 6. Action Button */
+/* Action Button */
 .proceed-btn {
   background: var(--accent);
   color: #000;
   border: none;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 16px;
+  border-radius: 14px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   margin-top: 10px;
+  width: 100%;
 }
 
 .proceed-btn:hover {
-  transform: scale(1.02);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   filter: brightness(1.1);
 }
 
-/* 7. Drop-in Animation */
+/* Animation */
 @keyframes dropIn {
-  from { opacity: 0; transform: translateY(-20px); }
+  from { opacity: 0; transform: translateY(-15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
-@media (max-width: 480px) {
+/* Responsive Handling */
+@media (max-width: 920px) {
   .summary-container {
-    width: 95%;
-    padding: 16px;
+    max-width: 500px;
+    margin: 0 auto;
   }
 }

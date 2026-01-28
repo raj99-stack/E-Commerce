@@ -30,10 +30,8 @@
   <p><strong>Original Total:</strong> ₹{{ getOriginalTotal() }}</p>
   <p><strong>Discount:</strong> -₹{{ discount }}</p>
   <p>
-    <strong>Delivery Charges:</strong> ₹{{
-      getOriginalTotal() > 2000 ? 0 : 50
-    }}
-    [delivery charge free over 2000]
+    <strong>Delivery Charges:</strong> ₹{{ getOriginalTotal() > 2000 ? 0 : 50 }}
+    <span class="note">[Free delivery over ₹2000]</span>
   </p>
   <p class="grand-total"><strong>Grand Total:</strong> ₹{{ getGrandTotal() }}</p>
   <p class="savings"><strong>Your Total Savings:</strong> ₹{{ getTotalSavings() }}</p>

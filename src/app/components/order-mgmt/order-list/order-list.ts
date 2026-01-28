@@ -19,6 +19,7 @@ export class OrderList implements OnInit {
   searchForm: FormGroup;
   eOrderStatus = OrderStatus;
 
+  
   constructor(
     private orderMgmt: OrderMgmt, 
     private fb: FormBuilder,
@@ -37,7 +38,9 @@ export class OrderList implements OnInit {
       if (user) {
         console.log("Fetching orders for User ID:", user.id); // Debug log
         this.orders = this.orderMgmt.getOrdersForUser(user.id);
+        console.log(this.orders)
       }
     });
   }
+  
 }

@@ -3,31 +3,52 @@ import { User } from '../models/user';
 import { Product } from '../models/product';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MOCK_USERS } from '../models/user';
 
-export const MOCK_USERS: User[] = [
-  {
-    id: 1,
-    name: 'System Admin',
-    email: 'admin@example.com',
-    password: 'Admin1234@',
-    shippingAddress: 'Admin HQ',
-    paymentDetails: 'Admin Card',
-    cart: [],
-    wishlist: [],
-    role: 'admin',
-  },
-  {
-    id: 2,
-    name: 'John Doe',
-    email: 'john@example.com',
-    password: 'John1234@',
-    shippingAddress: '123 Main Street',
-    paymentDetails: 'Visa **** 1234',
-    cart: [],
-    wishlist: [],
-    role: 'user',
-  },
-];
+// export const MOCK_USERS: User[] = [
+//   {
+//     id: 0,
+//     name: 'System Admin',
+//     email: 'admin@example.com',
+//     password: 'Admin1234@',
+//     role: 'admin',
+//     cart: [],        // ✅ empty array
+//     wishlist: []     // ✅ empty array
+//   },
+//   {
+//     id: 1,
+//     name: 'John Doe',
+//     email: 'john@example.com',
+//     password: 'John1234@',
+//     shippingAddress: '123 Street, City',
+//     paymentDetails: 'Visa **** 1234',
+//     cart: [],
+//     wishlist: [],
+//     role: 'user'
+//   },
+//   {
+//     id: 2,
+//     name: 'Jane Smith',
+//     email: 'jane@example.com',
+//     password: 'abcd',
+//     shippingAddress: '456 Avenue, City',
+//     paymentDetails: 'Mastercard **** 5678',
+//     cart: [],
+//     wishlist: [],
+//     role: 'user'
+//   },
+//   {
+//     id: 3,
+//     name: 'Alice',
+//     email: 'alice@example.com',
+//     password: 'Alic1234@',
+//     shippingAddress: '789 Road, City',
+//     paymentDetails: 'UPI alice@upi',
+//     cart: [],
+//     wishlist: [],
+//     role: 'user'
+//   },
+// ];
 
 @Injectable({
   providedIn: 'root',

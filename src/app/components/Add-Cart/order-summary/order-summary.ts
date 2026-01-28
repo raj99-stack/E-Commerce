@@ -50,5 +50,7 @@ export class OrderSummary {
 
   proceedOrder() {
     this.orderMgmt.placeOrder(this.cartItems);
+    this.cartService.clearCart();
+    // console.log(this.cartItems);
   }
 }

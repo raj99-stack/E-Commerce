@@ -12,8 +12,8 @@ export interface User {
   password: string; 
   shippingAddress?: string; 
   paymentDetails?: string; 
-  cart: CartItem[];        // ✅ required
-  wishlist: CartItem[];    // ✅ required
+  cart: CartItem[];        
+  wishlist: CartItem[];    
   role: 'user' | 'admin'; 
 }
 

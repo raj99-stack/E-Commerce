@@ -26,7 +26,7 @@ export class OrderMain implements OnInit {
     this.userService.currentUser$.subscribe(user => {
       if (user) {
         // We set the active ID in the service so child components can use it
-        this.orderMgmt.activeUserId = user.id;
+        console.log("Logged in user:", user);
       }
     });
   }

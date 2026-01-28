@@ -9,7 +9,7 @@ export class CartService {
 
   // Always return a copy so Angular detects changes
   getCart(): CartItem[] {
-    return [...this.cart];
+    return this.cart;
   }
 
   // Add a full item (used when adding from product listing)
