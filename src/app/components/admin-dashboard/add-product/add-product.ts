@@ -1,21 +1,42 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Product } from '../../../models/product';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { ProductService } from '../../../services/product.service';
+ 
 @Component({
   selector: 'app-add-product',
-  imports: [FormsModule,CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-product.html',
-  styleUrl: './add-product.css',
+  styleUrls: ['./add-product.css'],
 })
 export class AddProduct {
-  @Output() productAdded = new EventEmitter<Product>(); 
-  newProduct: Product = { id: 0, name: '', description: '', price: 0,imageUrl:'assets/image.png'}; 
-  onSubmit() 
-  { 
-    this.productAdded.emit(this.newProduct)
+  newProduct: Product = {
+    id: 0,
+    name: '',
+    description: '',
+    price: 0,
+    category: '',
+    imageUrl: 'assets/image.png'
+  };
+ 
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) {}
+ 
+  onSubmit() {
+    // ✅ Add product directly via service
+    this.productService.addProduct(this.newProduct);
+ 
     alert('✅ Product has been added successfully!');
-    this.newProduct={ id: 0, name: '', description: '', price: 0,imageUrl:'assets/image.png'};
-  }; 
+ 
+    // Reset form
+    this.newProduct = { id: 0, name: '', description: '', price: 0, category: '', imageUrl: 'assets/image.png' };
+ 
+    // Redirect to product list
+    this.router.navigate(['/admin/products']);
+  }
 }

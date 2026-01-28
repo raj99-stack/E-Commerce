@@ -1,36 +1,27 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from '../../../models/product';
-import { Admin } from '../admin/admin';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ViewProduct } from '../view-product/view-product';
-
+import { RouterModule, Router } from '@angular/router'; // ✅ Import Router stuff
+import { UserService } from '../../../services/user-service';
+ 
 @Component({
   selector: 'app-admin-main',
   standalone: true,
-  imports: [CommonModule, FormsModule, Admin,ViewProduct],
+  imports: [CommonModule, RouterModule], // ✅ Add RouterModule
   templateUrl: './admin-main.html',
   styleUrls: ['./admin-main.css'],
 })
 export class AdminMain {
-  @Input() productList: Product[] = [];
-  @Output() logoutEvent = new EventEmitter<void>();  // ✅ new output
-  @Output() productListChange = new EventEmitter<Product[]>();
-  view: string = 'home';
-  currIndex: number = 0;
-
-  ngOnChanges() {
-    this.currIndex = this.productList.length + 1;
-  }
-
-  addProduct(newProduct: Product) { 
-    const productWithId = { ...newProduct, id: this.currIndex }; 
-    this.productList.push(productWithId); this.currIndex++; 
-    console.log('Updated products:', this.productList); 
-    this.productListChange.emit(this.productList); 
-   }
-
+  // ❌ No more productList, currIndex, or view variables!
+  // The Router handles which component is shown.
+ 
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
+ 
   logout() {
-    this.logoutEvent.emit();   // ✅ notify parent to log out
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }
+ 

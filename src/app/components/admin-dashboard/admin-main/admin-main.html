@@ -1,35 +1,18 @@
-<!-- Navbar -->
-<div class="navbar"> 
+<div class="navbar">
   <div class="nav-brand">🛒 Product Manager</div>
-  
+ 
   <div class="nav-links">
-    <div class="nav-item" [class.active]="view==='home'" (click)="view='home'">🏠 Home</div>
-    <div class="nav-item" [class.active]="view==='admin'" (click)="view='admin'">⚙️ Admin</div>
-    <div class="nav-item" [class.active]="view==='settings'" (click)="view='settings'">⚙️ Settings</div>
-
-    <!-- ✅ Logout button added -->
+    <a routerLink="products" routerLinkActive="active" class="nav-item">🏠 Products</a>
+    <a routerLink="add" routerLinkActive="active" class="nav-item">➕ Add Product</a>
+    <a routerLink="manage" routerLinkActive="active" class="nav-item">✏️🗑️ Manage Products</a>
+ 
+    <span class="nav-item disabled">⚙️ Settings</span>
     <button class="logout-btn" (click)="logout()">🚪 Logout</button>
   </div>
 </div>
-
-<!-- Content -->
+ 
 <div class="content">
-  <!-- Home -->
-  <div *ngIf="view==='home'">
-    <!-- <h2>🏠 Home</h2> -->
-    <app-view-product [productList]="productList"></app-view-product>
-  </div>
-
-  <!-- Admin -->
-  <div *ngIf="view==='admin'">
-    <app-admin [productList]="productList" (productAdded)="addProduct($event)"></app-admin>
-  </div>
-
-  <!-- Reports -->
-
-  <!-- Settings -->
-  <div *ngIf="view==='settings'">
-    <h2>⚙️ Settings</h2>
-    <p>Configuration options will appear here.</p>
-  </div>
+  <router-outlet></router-outlet>
 </div>
+ 
+ 
