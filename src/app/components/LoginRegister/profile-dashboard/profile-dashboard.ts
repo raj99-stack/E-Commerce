@@ -19,13 +19,13 @@ export class ProfileDashboard implements OnInit {
   constructor(private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit() {
-    // ✅ Subscribe to current user
-    this.userService.currentUser$.subscribe(user => {
-      if (user) {
-        this.profileData = user;
-        this.initForm();
-      }
-    });
+    const user = this.userService.loggedInUser;
+    if (user) {
+      this.profileData = user;
+      this.initForm();
+    } else {
+      console.log("No user logged in, cannot load profile.");
+    }
   }
 
   initForm() {
@@ -50,7 +50,7 @@ export class ProfileDashboard implements OnInit {
   saveChanges() {
     if (this.profileForm.valid) {
       const updatedUser: User = { ...this.profileData, ...this.profileForm.value };
-      this.userService.updateProfile(updatedUser); // ✅ update via service
+      this.userService.updateProfile(updatedUser); 
       this.isEditing = false;
     } else {
       this.profileForm.markAllAsTouched();

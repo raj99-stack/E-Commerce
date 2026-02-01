@@ -28,15 +28,13 @@ export class AddProduct {
   ) {}
  
   onSubmit() {
-    // ✅ Add product directly via service
+    
     this.productService.addProduct(this.newProduct);
  
-    alert('✅ Product has been added successfully!');
+    alert(' Product has been added successfully!');
  
-    // Reset form
     this.newProduct = { id: 0, name: '', description: '', price: null as any, category: '', imageUrl: 'assets/image.png' };
  
-    // Redirect to product list
     this.router.navigate(['/admin/products']);
   }
 }

@@ -34,12 +34,14 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: whitesmoke;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: right;
 }
 
 /* ALL BUTTONS: Identical Neon Style

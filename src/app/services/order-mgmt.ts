@@ -67,10 +67,8 @@ export class OrderMgmt {
 
   constructor(private userService: UserService) {}
 
-  // ==============================================================
-  //  SECTION A: CART LOGIC
-  // ==============================================================
-
+  //  CART LOGIC
+  
   getOriginalTotal(cartItems: CartItem[]): number {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
@@ -106,7 +104,7 @@ export class OrderMgmt {
 
     const newOrder: Order = {
       id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
-      userId: currentUser.id,   // ✅ Always tied to logged-in user
+      userId: currentUser.id,   
       date: new Date().toISOString(),
       status: OrderStatus.Pending,
       totalAmount: finalAmount,
@@ -120,12 +118,12 @@ export class OrderMgmt {
     this.orders.unshift(newOrder);
     console.log('Order Placed & Saved:', newOrder);
     alert(`Order placed! Final amount: ₹${finalAmount}`);
-    cartItems.length = 0;
+    // cartItems.length = 0;
+    
+
   }
 
-  // ==============================================================
-  //  SECTION B: MANAGEMENT LOGIC
-  // ==============================================================
+  // MANAGEMENT LOGIC
 
   getOrdersForUser(userId?: number): Order[] {
     const targetId = userId ?? this.userService.loggedInUser?.id;
@@ -137,7 +135,6 @@ export class OrderMgmt {
     const userOrders = this.orders.filter(order => order.userId === targetId);
 
     return userOrders.map(order => {
-      this.checkAndAutoFulfill(order);
       const enrichedItems = order.items.map(item => {
         const productInfo = MOCK_PRODUCTS.find(p => p.id === item.productId);
         if (productInfo) {
@@ -158,7 +155,6 @@ export class OrderMgmt {
     const order = this.orders.find(o => o.id === orderId);
     if (!order) return undefined;
 
-    this.checkAndAutoFulfill(order);
 
     const enrichedItems = order.items.map(item => {
       const productInfo = MOCK_PRODUCTS.find(p => p.id === item.productId);
@@ -185,20 +181,14 @@ export class OrderMgmt {
     }
   }
 
-  private checkAndAutoFulfill(order: Order) {
-    if (order.status === OrderStatus.Delivered) {
-      const orderDate = new Date(order.date);
-      const today = new Date();
-      const diffDays = Math.ceil(Math.abs(today.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
-      if (diffDays > 15) order.status = OrderStatus.Fulfilled;
-    }
-  }
+
 
   getStats(userId?: number) {
     const myOrders = this.getOrdersForUser(userId);
     return {
       totalOrders: myOrders.length,
-      totalSpent: myOrders.reduce((acc, curr) => acc + curr.totalAmount, 0),
+      //remove total spent form order dashboard stats
+      // totalSpent: myOrders.reduce((acc, curr) => acc + curr.totalAmount, 0), 
       pendingCount: myOrders.filter(o =>
         o.status === OrderStatus.Pending || o.status === OrderStatus.Shipped
       ).length

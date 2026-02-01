@@ -18,13 +18,13 @@ export class LoginForm {
   password: string = '';
  
   constructor(private userService: UserService) {}
- 
+ //Successful login
   processLogin(form: any) {
     if (form.valid) {
       const user = this.userService.login(this.email, this.password);
       if (user) {
         alert(`Welcome ${user.name}`);
-        this.loginSuccess.emit(user); // ✅ send user to parent
+        this.loginSuccess.emit(user);
       } else {
         alert('Invalid credentials!');
       }

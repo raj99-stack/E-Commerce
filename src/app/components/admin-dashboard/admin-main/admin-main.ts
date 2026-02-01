@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router'; // ✅ Import Router stuff
+import { RouterModule, Router } from '@angular/router'; 
 import { UserService } from '../../../services/user-service';
  
 @Component({
   selector: 'app-admin-main',
   standalone: true,
-  imports: [CommonModule, RouterModule], // ✅ Add RouterModule
+  imports: [CommonModule, RouterModule], 
   templateUrl: './admin-main.html',
   styleUrls: ['./admin-main.css'],
 })
 export class AdminMain {
-  // ❌ No more productList, currIndex, or view variables!
-  // The Router handles which component is shown.
  
   constructor(
     private userService: UserService,

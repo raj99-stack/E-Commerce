@@ -1,12 +1,14 @@
-/* Container Background */
 :host {
   display: block;
-  background-color: #050505; /* Matches the dark app background */
+  background-color: #050505; 
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
   color: white;
 }
-
+h2 {
+  text-align: center;
+  padding-top: 20px;
+}
 .dashboard-stats { 
   display: flex; 
   gap: 24px; 

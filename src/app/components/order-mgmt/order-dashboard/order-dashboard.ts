@@ -1,34 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderMgmt } from '../../../services/order-mgmt';
-import { UserService } from '../../../services/user-service'; // ✅ 1. Import UserService
+import { UserService } from '../../../services/user-service';
+import { RouterLink, RouterOutlet } from "@angular/router"; 
 
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RouterOutlet],
   templateUrl: './order-dashboard.html',
-  styleUrl: './order-dashboard.css'
+  styleUrls: ['./order-dashboard.css'] 
 })
 export class OrderDashboard implements OnInit {
   stats = {
     totalOrders: 0,
-    totalSpent: 0,
+    // removed total spent from dashbord.
+    // totalSpent: 0,
     pendingCount: 0
   };
 
   constructor(
     private orderMgmt: OrderMgmt,
-    private userService: UserService // ✅ 2. Inject UserService
+    private userService: UserService 
   ) {}
 
   ngOnInit() {
-    // ✅ 3. Subscribe to the User Service directly
-    this.userService.currentUser$.subscribe(user => {
-      if (user) {
-        // Now we are guaranteed to have the user!
-        this.stats = this.orderMgmt.getStats(user.id);
-      }
-    });
+    const user = this.userService.loggedInUser;
+    if (user) {
+      this.stats = this.orderMgmt.getStats(user.id);
+    } else {
+      console.log("No user logged in, dashboard stats unavailable.");
+    }
   }
 }

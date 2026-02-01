@@ -25,17 +25,16 @@ export class Editformcomponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     const found = this.productService.getProductById(id);
     if (found) {
-      this.product = { ...found }; // clone for editing
+      this.product = { ...found }; 
     }
   }
  
   onSubmit() {
     this.productService.updateProduct(this.product);
-    alert('✅ Product updated successfully!');
-    this.router.navigate(['/admin/manage']); // go back to list
+    alert('Product updated successfully!');
+    this.router.navigate(['/admin/manage']); 
   }
  
-  // ✅ Public method for cancel button
   onCancel() {
     this.router.navigate(['/admin/manage']);
   }

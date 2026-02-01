@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
 import { OrderMgmt } from '../../../services/order-mgmt';
 import { Order, OrderStatus } from '../../../models/order';
-// ✅ 1. Import User Service and Model
 import { UserService } from '../../../services/user-service';
 import { User } from '../../../models/user';
 
@@ -18,7 +17,6 @@ import { User } from '../../../models/user';
 export class OrderDetail implements OnInit {
   order: Order | undefined;
   
-  // ✅ 2. Property to hold the user details for this specific order
   orderUser: User | undefined;
   
   eOrderStatus = OrderStatus; 
@@ -30,7 +28,7 @@ export class OrderDetail implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private orderMgmt: OrderMgmt,
-    private userService: UserService // ✅ 3. Inject UserService
+    private userService: UserService 
   ) {}
 
   ngOnInit() {
@@ -38,14 +36,13 @@ export class OrderDetail implements OnInit {
     if (id) {
       this.order = this.orderMgmt.getOrderById(id);
       
-      // ✅ 4. Fetch the User details associated with this order
+
       if (this.order) {
         this.orderUser = this.userService.getUserById(this.order.userId);
       }
     }
   }
 
-  // ... (Keep your Cancel/Return logic exactly the same) ...
   
   initiateCancel() {
     this.showCancelParams = true;

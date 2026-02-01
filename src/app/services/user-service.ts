@@ -1,77 +1,25 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Product } from '../models/product';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { MOCK_USERS } from '../models/user';
-
-// export const MOCK_USERS: User[] = [
-//   {
-//     id: 0,
-//     name: 'System Admin',
-//     email: 'admin@example.com',
-//     password: 'Admin1234@',
-//     role: 'admin',
-//     cart: [],        // ✅ empty array
-//     wishlist: []     // ✅ empty array
-//   },
-//   {
-//     id: 1,
-//     name: 'John Doe',
-//     email: 'john@example.com',
-//     password: 'John1234@',
-//     shippingAddress: '123 Street, City',
-//     paymentDetails: 'Visa **** 1234',
-//     cart: [],
-//     wishlist: [],
-//     role: 'user'
-//   },
-//   {
-//     id: 2,
-//     name: 'Jane Smith',
-//     email: 'jane@example.com',
-//     password: 'abcd',
-//     shippingAddress: '456 Avenue, City',
-//     paymentDetails: 'Mastercard **** 5678',
-//     cart: [],
-//     wishlist: [],
-//     role: 'user'
-//   },
-//   {
-//     id: 3,
-//     name: 'Alice',
-//     email: 'alice@example.com',
-//     password: 'Alic1234@',
-//     shippingAddress: '789 Road, City',
-//     paymentDetails: 'UPI alice@upi',
-//     cart: [],
-//     wishlist: [],
-//     role: 'user'
-//   },
-// ];
+import { CartService } from './cart';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private users: User[] = [...MOCK_USERS];
+  private currentUser: User | null = null;
 
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  currentUser$ = this.currentUserSubject.asObservable();
+  constructor(private cartService: CartService) {}
 
-  // ✅ Cart count observable
-  cartCount$ = this.currentUser$.pipe(
-    map(user => user ? user.cart.reduce((sum, item) => sum + item.quantity, 0) : 0)
-  );
-
-  constructor() {}
-
+  // --- USER STATE ---
   get loggedInUser(): User | null {
-    return this.currentUserSubject.value;
+    return this.currentUser;
   }
 
   isLoggedIn(): boolean {
-    return this.currentUserSubject.value !== null;
+    return this.currentUser !== null;
   }
 
   getAllUsers(): User[] {
@@ -81,8 +29,15 @@ export class UserService {
   login(email: string, password: string): User | null {
     const found = this.users.find((u) => u.email === email && u.password === password);
     if (found) {
-      this.currentUserSubject.next({ ...found });
-      return found;
+      this.currentUser = found;
+
+      // Load saved cart into CartService
+      this.cartService.clearCart();
+      if (found.cart) {
+        found.cart.forEach((item) => this.cartService.addItem(item));
+      }
+
+      return this.currentUser;
     }
     return null;
   }
@@ -95,60 +50,54 @@ export class UserService {
   }
 
   logout(): void {
-    const currentUser = this.currentUserSubject.value;
-    if (currentUser) {
-      currentUser.cart = [];
-      currentUser.wishlist = [];
+    if (this.currentUser) {
+
+      this.currentUser.cart = [...this.cartService.getCart()];
     }
-    this.currentUserSubject.next(null);
+    this.currentUser = null;
+    this.cartService.clearCart();
   }
 
   updateProfile(updated: User): void {
     const idx = this.users.findIndex((u) => u.id === updated.id);
     if (idx >= 0) {
       this.users[idx] = { ...updated };
-      this.currentUserSubject.next({ ...updated });
+      this.currentUser = { ...updated };
     }
   }
 
+  // --- CART HELPERS ---
   addToCart(product: Product) {
-    const currentUser = this.currentUserSubject.value;
-    if (!currentUser) {
+    if (!this.currentUser) {
       alert('You must be logged in to add products to the cart.');
       return;
     }
-
-    if (!currentUser.cart) currentUser.cart = [];
-
-    const existingItem = currentUser.cart.find((i) => i.id === product.id);
-    if (existingItem) {
-      existingItem.quantity++;
-    } else {
-      currentUser.cart.push({ ...product, quantity: 1 });
-    }
-
-    this.currentUserSubject.next({ ...currentUser });
+    this.cartService.addItem({ ...product, quantity: 1 });
   }
 
+  getCartCount(): number {
+    return this.cartService.getCart()
+      .reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  // --- WISHLIST HELPERS ---
   addToWishlist(product: Product) {
-    const currentUser = this.currentUserSubject.value;
-    if (!currentUser) {
+    if (!this.currentUser) {
       alert('You must be logged in to add products to the wishlist.');
       return;
     }
 
-    if (!currentUser.wishlist) currentUser.wishlist = [];
+    if (!this.currentUser.wishlist) this.currentUser.wishlist = [];
 
-    const existingItem = currentUser.wishlist.find((i) => i.id === product.id);
+    const existingItem = this.currentUser.wishlist.find((i) => i.id === product.id);
     if (existingItem) {
-      existingItem.quantity++;
+      alert('Already in wishlist')
     } else {
-      currentUser.wishlist.push({ ...product, quantity: 1 });
+      this.currentUser.wishlist.push({ ...product, quantity: 1 });
     }
-
-    this.currentUserSubject.next({ ...currentUser });
   }
 
+  // --- USER LOOKUP ---
   getUserById(id: number): User | undefined {
     return this.users.find((u) => u.id === id);
   }

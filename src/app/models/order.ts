@@ -8,7 +8,7 @@ export enum OrderStatus {
 }
 
 export interface OrderItem {
-  productId: number; // ✅ Change to 'any' to handle Number (1) vs String ("1") mismatches
+  productId: number; 
   quantity: number;
   priceAtPurchase: number;
   

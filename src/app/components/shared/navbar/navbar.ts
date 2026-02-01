@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { User } from '../../../models/user';
+import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../../services/user-service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -12,14 +12,17 @@ import { UserService } from '../../../services/user-service';
   styleUrls: ['./navbar.css']
 })
 export class Navbar {
-  @Input() currentUser: User | null = null;
-  @Output() logout = new EventEmitter<void>();
+  
+  constructor(public userService: UserService, 
+    private router: Router
+  ) {}
 
-  cartCount: number = 0;
+  get currentUser(): User | null {
+    return this.userService.loggedInUser;
+  }
 
-  constructor(private userService: UserService) {
-    this.userService.cartCount$.subscribe(count => {
-      this.cartCount = count;   // ✅ updates automatically
-    });
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }

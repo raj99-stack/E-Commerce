@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../../models/product';
-import { ProductService } from '../../../services/product.service'; // ✅ Import Service
+import { ProductService } from '../../../services/product.service'; 
  
 @Component({
   selector: 'app-view-product',
@@ -12,13 +12,12 @@ import { ProductService } from '../../../services/product.service'; // ✅ Impor
   styleUrls: ['./view-product.css'],
 })
 export class ViewProduct implements OnInit {
-  // ❌ REMOVED: @Input() productList
-  products: Product[] = []; // Local array to hold fetched data
+  products: Product[] = []; 
  
   searchTerm: string = '';
   sortCategory: string = '';
  
-  constructor(private productService: ProductService) {} // ✅ Inject Service
+  constructor(private productService: ProductService) {} 
 ngOnInit() {
   this.products = this.productService.getProducts();
 }

@@ -36,13 +36,13 @@ export class Editproduct implements OnInit {
   }
  
   goToEdit(id: number) {
-    this.router.navigate(['/admin/edit', id]); // navigates to edit form
+    this.router.navigate(['/admin/edit', id]); 
   }
  
   goToDelete(id: number) {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productService.deleteProduct(id);
-      this.products = this.productService.getProducts(); // refresh list
+      this.products = this.productService.getProducts();
     }
   }
 }

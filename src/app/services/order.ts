@@ -36,6 +36,6 @@ export class OrderService {
 
   placeOrder(cartItems: CartItem[]) {
     alert(`Order placed! Final amount: ₹${this.getGrandTotal(cartItems)}`);
-    cartItems.length = 0; // clear cart
+    cartItems.length = 0; 
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user-service';
+import { CartService } from '../../../services/cart';
 import { CartItem, User } from '../../../models/user';
 
 @Component({
@@ -11,7 +12,10 @@ import { CartItem, User } from '../../../models/user';
   styleUrls: ['./wishlist.css']
 })
 export class Wishlist {
-  constructor(public userService: UserService) {}
+  constructor(
+    public userService: UserService,
+    public cartService: CartService
+  ) {}
 
   get wishlistItems(): CartItem[] {
     return this.userService.loggedInUser?.wishlist ?? [];
@@ -30,8 +34,11 @@ export class Wishlist {
     if (user) {
       const item = user.wishlist.find(i => i.id === id);
       if (item) {
-        user.cart.push(item);
+        this.cartService.addItem({ ...item, quantity: 1 });
+
+       
         user.wishlist = user.wishlist.filter(i => i.id !== id);
+
         this.userService.updateProfile(user);
       }
     }

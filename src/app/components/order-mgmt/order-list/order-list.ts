@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { OrderMgmt } from '../../../services/order-mgmt';
 import { Order, OrderStatus } from '../../../models/order';
 import { OrderFilterPipe } from '../../../pipes/order-filter.pipe';
-import { UserService } from '../../../services/user-service'; // ✅ 1. Import UserService
+import { UserService } from '../../../services/user-service';
 
 @Component({
   selector: 'app-order-list',
@@ -19,11 +19,10 @@ export class OrderList implements OnInit {
   searchForm: FormGroup;
   eOrderStatus = OrderStatus;
 
-  
   constructor(
     private orderMgmt: OrderMgmt, 
     private fb: FormBuilder,
-    private userService: UserService // ✅ 2. Inject UserService
+    private userService: UserService 
   ) {
     this.searchForm = this.fb.group({
       searchText: [''],
@@ -32,15 +31,14 @@ export class OrderList implements OnInit {
   }
 
   ngOnInit() {
-    // ✅ 3. Subscribe to the User Service directly
-    // This ensures we wait until the User is actually loaded before fetching orders
-    this.userService.currentUser$.subscribe(user => {
-      if (user) {
-        console.log("Fetching orders for User ID:", user.id); // Debug log
-        this.orders = this.orderMgmt.getOrdersForUser(user.id);
-        console.log(this.orders)
-      }
-    });
+    const user = this.userService.loggedInUser;
+    if (user) {
+      console.log("Fetching orders for User ID:", user.id);
+      this.orders = this.orderMgmt.getOrdersForUser(user.id);
+      console.log(this.orders);
+    } else {
+      console.log("No user logged in, cannot fetch orders.");
+      this.orders = [];
+    }
   }
-  
 }

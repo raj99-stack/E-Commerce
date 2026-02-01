@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../../models/user';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user-service';
-import { Router } from '@angular/router';   // ✅ Add this
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-register-form',
@@ -22,7 +22,7 @@ export class RegisterForm {
 
   constructor(
     private userService: UserService,
-    private router: Router   // ✅ Inject Router
+    private router: Router  
   ) {}
 
   processRegister(form: any) {
@@ -41,10 +41,10 @@ export class RegisterForm {
       const success = this.userService.register(newUser);
       if (success) {
         alert('User Registered Successfully');
-        this.router.navigate(['/login']);   // ✅ Redirect to login page
+        this.router.navigate(['/login']);  
       } else {
         alert('Email already exists. Please login.');
-        this.router.navigate(['/login']);   // ✅ Also redirect to login
+        this.router.navigate(['/login']);   
       }
     }
   }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router';
 import { ProductCard } from '../product-card/product-card';
 import { Product } from '../../../models/product';
-import { ProductService } from '../../../services/product.service'; // ✅ Import ProductService
-import { UserService } from '../../../services/user-service'; // ✅ Import UserService
+import { ProductService } from '../../../services/product.service'; 
+import { UserService } from '../../../services/user-service'; 
 import { User } from '../../../models/user';
 
 @Component({
@@ -19,58 +19,32 @@ export class HeroPage implements OnInit {
   
   bannerMessage: string = 'Shop The Latest Products!';
   
-  // ✅ No more @Input() products! We fetch them.
   products: Product[] = [];
   
-  // ✅ No more @Input() loggedInUser! We get it from Service.
   loggedInUser: User | null = null;
 
   searchTerm: string = '';
   sortCategory: string = '';
 
   constructor(
-    private productService: ProductService, // ✅ Inject ProductService
-    private userService: UserService,       // ✅ Inject UserService
+    private productService: ProductService, 
+    private userService: UserService,       
     private router: Router
   ) {}
 
- ngOnInit() {
-    // 1. Fetch Products
-    this.products=this.productService.getProducts();
-   
-   
-    // 1. Fetch Products
-   
- 
-    // 2. Get User from Service (Assuming your service has a method or property for this)
-    // If your UserService uses an Observable/Signal, subscribe to it here.
-    // For now, let's assume a method like getCurrentUser() or similar exists.
+  ngOnInit() {
+    // Fetch Products
+    this.products = this.productService.getProducts();
     this.loggedInUser = this.userService.loggedInUser;
   }
-
- 
-
-    // 2. Get User from Service (Assuming your service has a method or property for this)
-    // If your UserService uses an Observable/Signal, subscribe to it here.
-    // For now, let's assume a method like getCurrentUser() or similar exists.
-
-    // 2. Get User from Service (Assuming your service has a method or property for this)
-    // If your UserService uses an Observable/Signal, subscribe to it here.
-    // For now, let's assume a method like getCurrentUser() or similar exists.
 
   onAddToCart(product: Product) {
     if (!this.loggedInUser) {
       alert('Please login first to add items to cart!');
-      this.router.navigate(['/login']); // ✅ Redirect to login via Router
+      this.router.navigate(['/login']);
       return;
     }
 
-    if (this.loggedInUser.role === 'admin') {
-      alert('Admins cannot add products to cart.');
-      return;
-    }
-
-    // ✅ Move Logic: Directly call Service instead of emitting event
     this.userService.addToCart(product);
     alert("Added to Cart");
   }
@@ -81,7 +55,6 @@ export class HeroPage implements OnInit {
       return;
     }
     
-    // ✅ Move Logic: Directly call Service
     this.userService.addToWishlist(product);
     alert('Added to wishlist');
   }
@@ -89,7 +62,6 @@ export class HeroPage implements OnInit {
   get filteredProducts(): Product[] {
     let result = this.products;
 
-    // 🔍 filter by search
     if (this.searchTerm) {
       result = result.filter(
         (p) =>
@@ -98,7 +70,6 @@ export class HeroPage implements OnInit {
       );
     }
 
-    // 📂 sort by category
     if (this.sortCategory) {
       result = result.filter(
         (p) => p.category?.toLowerCase() === this.sortCategory.toLowerCase(),

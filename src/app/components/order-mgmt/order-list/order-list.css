@@ -8,6 +8,9 @@
   color: #ffffff;
 }
 
+h2 {
+  text-align: center;
+}
 .list-container {
   max-width: 1200px;
   margin: 0 auto;

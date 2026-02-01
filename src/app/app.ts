@@ -29,15 +29,12 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit() {
-    // ✅ CRITICAL FIX: Subscribe to the service!
-    // Whenever the service changes the user (login/logout), this runs automatically.
-    this.userService.currentUser$.subscribe((user) => {
-      this.loggedInUser = user;
-    });
+    this.loggedInUser = this.userService.loggedInUser;
   }
 
   handleLogout() {
-    this.userService.logout(); // Service will emit null -> subscription updates loggedInUser
+    this.userService.logout(); 
+    this.loggedInUser = null; 
     this.router.navigate(['/home']);
   }
 }

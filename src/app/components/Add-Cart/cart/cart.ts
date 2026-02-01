@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../services/cart';
-import { UserService } from '../../../services/user-service'; // ✅ use UserService instead
+import { UserService } from '../../../services/user-service';
 import { CartItem, User } from '../../../models/user';
 
 @Component({
@@ -18,10 +18,7 @@ export class Cart {
     public cartService: CartService,
     private userService: UserService
   ) {
-    // ✅ subscribe to current user
-    this.userService.currentUser$.subscribe(user => {
-      this.loggedInUser = user;
-    });
+    this.loggedInUser = this.userService.loggedInUser;
   }
 
   get cartItems(): CartItem[] {
@@ -43,7 +40,6 @@ export class Cart {
     this.syncCart();
   }
 
-  // ✅ updated to use UserService instead of WishlistService
   onAddToWishlist(id: number) {
     if (this.loggedInUser) {
       const item = this.cartService.getCart().find(c => c.id === id);
@@ -53,7 +49,6 @@ export class Cart {
           this.loggedInUser.wishlist.push({ ...item });
           this.userService.updateProfile(this.loggedInUser);
         }
-        // remove from cart after moving
         this.cartService.deleteItem(id);
         this.syncCart();
       }

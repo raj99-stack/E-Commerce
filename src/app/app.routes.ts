@@ -25,17 +25,15 @@ export const routes: Routes = [
   { path: 'cart', component: MainCart },
   { path: 'profile', component: ProfileDashboard },
 
-  // ✅ NESTED ROUTING FIX
   { 
-    path: 'orders', component: OrderMain, // 1. Load the Shell (Sidebar + Outlet)
-    children: [           // 2. Load these children INTO OrderMain's outlet
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
-      { path: 'dashboard', component: OrderDashboard },
+    path: 'orders', component: OrderMain, 
+    children: [          
+      { path: '', redirectTo: 'history', pathMatch: 'full' }, 
       { path: 'history', component: OrderList },
       { path: 'detail/:id', component: OrderDetail }
     ]
   },
-  // ✅ NESTED ADMIN ROUTES
+
   {
   path: 'admin',
   component: AdminMain,
@@ -44,11 +42,9 @@ export const routes: Routes = [
     { path: 'products', component: ViewProduct },
     { path: 'add', component: AddProduct },
  
-    // Manage Products (edit + delete in one place)
     { path: 'manage', component: Editproduct },
  
-    // Edit form for a specific product
-    { path: 'edit/:id', component: Editformcomponent } // <-- separate form component
+    { path: 'edit/:id', component: Editformcomponent }
   ]
 },
  

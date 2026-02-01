@@ -7,30 +7,25 @@ import { CartItem } from '../models/user';
 export class CartService {
   private cart: CartItem[] = [];
 
-  // Always return a copy so Angular detects changes
   getCart(): CartItem[] {
     return this.cart;
   }
 
-  // Add a full item (used when adding from product listing)
   addItem(item: CartItem) {
     const existing = this.cart.find(i => i.id === item.id);
     if (existing) {
-      existing.quantity += item.quantity ?? 1;
+      existing.quantity += item.quantity;
     } else {
-      this.cart.push({ ...item, quantity: item.quantity ?? 1 });
+      this.cart.push({ ...item, quantity: 1 });
     }
   }
-
+  
   // Increment by ID
   addItemById(itemId: number) {
     const item = this.cart.find(i => i.id === itemId);
     if (item) {
       item.quantity++;
     }
-    // ❌ Removed the "Unknown" fallback — better to only increment existing items
-    // If you want to support adding by ID alone, you should look up the product
-    // from a ProductService instead of hardcoding "Unknown".
   }
 
   // Decrement by ID
