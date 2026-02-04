@@ -1,7 +1,7 @@
 /* =========================
    Navbar (Header) — Dark + Neon
    ========================= */
-
+ 
 .navbar {
   position: sticky;
   top: 0;
@@ -16,7 +16,7 @@
   border-bottom: 1px solid #171a28;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
 }
-
+ 
 /* Subtle inner divider line */
 .navbar::after {
   content: "";
@@ -26,7 +26,7 @@
   background: linear-gradient(90deg, transparent, #22263a, transparent);
   pointer-events: none;
 }
-
+ 
 .user-info {
   color: var(--muted);
   font-weight: 600;
@@ -34,16 +34,14 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: whitesmoke;
 }
-
+ 
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 10px;
-  justify-content: right;
 }
-
+ 
 /* ALL BUTTONS: Identical Neon Style
 */
 .nav-actions button {
@@ -54,22 +52,22 @@
   letter-spacing: 0.2px;
   padding: 8px 14px;
   border-radius: 10px;
-  
+ 
   /* Text and Surface */
   color: var(--text);
   background: color-mix(in oklab, var(--accent) 16%, var(--surface-2));
-  
+ 
   /* The "Glow" properties applied to everyone */
   border: 1px solid var(--accent);
   box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
-
+ 
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
     border-color 160ms ease,
     background 160ms ease;
 }
-
+ 
 /* Hover: Unified lift + intensified glow */
 .nav-actions button:hover {
   transform: translateY(-1px);
@@ -77,18 +75,18 @@
   border-color: var(--accent);
   box-shadow: 0 0 20px color-mix(in oklab, var(--accent) 45%, transparent);
 }
-
+ 
 /* Active press */
 .nav-actions button:active {
   transform: translateY(0);
 }
-
+ 
 /* Focus ring for accessibility */
 .nav-actions button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent);
 }
-
+ 
 /* ---------------------------------------------
    Responsive & Accessibility
    --------------------------------------------- */
@@ -98,11 +96,11 @@
   .nav-actions { gap: 8px; }
   .nav-actions button { padding: 8px 12px; border-radius: 8px; font-weight: 600; }
 }
-
+ 
 @media (prefers-reduced-motion: reduce) {
   .nav-actions button { transition: none; }
 }
-
+ 
 @media (forced-colors: active) {
   .navbar { border-bottom-color: CanvasText; }
   .nav-actions button { border-color: CanvasText; }
